@@ -3,7 +3,7 @@ import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+    tags: {
       display: 'flex',
       justifyContent: 'center',
       flexWrap: 'wrap',
@@ -39,10 +39,13 @@ const Sidebar = ({ entries }) => {
     });
 
     return (
-        <div className={classes.root}>
+        <div>
+            <h3>Tags: </h3>
+        <div className={classes.tags}>
             {newTags.map((tag) => (
                 <Chip onClick={() => handleClick(tag)} label={tag} key={tag} />
             ))}
+        </div>
         </div>
     );
 };

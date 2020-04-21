@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+
+// Material UI style dependencies
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   blogpost: {
-    color: '#aaa'
+    color: theme.palette.common.darkerGrey
   }
 }));
 

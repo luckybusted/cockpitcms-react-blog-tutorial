@@ -4,12 +4,12 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
-const About = () => {
+const Legal = () => {
   return (
     <Grid container spacing={3}>
-      <h2>ABOUT</h2>
+      <h2>Legal Page</h2>
     </Grid>
   );
 };
 
-export default About;
+export default Legal;

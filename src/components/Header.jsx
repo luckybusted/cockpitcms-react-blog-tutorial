@@ -4,23 +4,34 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    backgroundColor: '#111',
-    borderRight: '1px solid ' + theme.palette.common.orange,
     minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    //borderRight: '2px dashed' + theme.palette.common.darkGrey,
     fontSize: 'calc(10px + 2vmin)',
-    color: '#fff'
+    color: theme.palette.common.darkGrey
   },
-  appLink: {
-    color: '#09d3ac'
+  headline: {
+    textAlign: 'center'
   },
-  avatar: {
-    marginTop: '2rem',
-    maxWidth: '50%',
-    borderRadius: '50%'
+  navigation: {
+    listStyle: 'none',
+    padding: '0'
+  },
+  link: {
+      color: theme.palette.common.darkGrey,
+      textDecoration: 'none',
+      border: '1px solid' + theme.palette.common.darkGrey,
+      display: 'block',
+      marginBottom: theme.spacing(4),
+      textAlign: 'center',
+      padding: '1rem 0',
+      '&:hover' :{
+        background: '#aaa',
+        fontStyle: 'italic'
+      } 
   }
+
 }));
 
 const Header = () => {
@@ -28,11 +39,16 @@ const Header = () => {
 
     return (
       <header className={classes.header}>
-        <img className={classes.avatar} src="https://avatars0.githubusercontent.com/u/1639364?s=460&u=a167d9c3805c832250ee8a8ce9d50b97f6ee19e6&v=4" alt=""/>
+        <h1 className={classes.headline}>
+          <Link to='/'>John Doe</Link>
+        </h1>
         <nav>
-          <ul>
+          <ul className={classes.navigation}>
             <li>
-              <Link to='/about'>About</Link>
+              <Link className={classes.link} to='/about'>About</Link>
+            </li>
+            <li>
+              <Link className={classes.link} to='/legal'>Legal</Link>
             </li>
           </ul>
         </nav>

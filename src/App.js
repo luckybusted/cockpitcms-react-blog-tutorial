@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from 'react';
+
+// Material UI style dependencies
 import { withRouter, Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Container from '@material-ui/core/Container';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+
+//Our components:
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+
+//The pages:
 import Home from './pages/Home';
 import About from './pages/About';
 import Post from './pages/Post';
-import Container from '@material-ui/core/Container';
-import CssBaseline from "@material-ui/core/CssBaseline";
-
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import Legal from './pages/Legal';
 
 const theme = createMuiTheme({
     palette: {
       common: {
-        orange: '#ffd000',
-        red: '#f00'
+        darkGrey: '#555',
+        darkerGrey: '#444'
       }
     }
   });
@@ -24,7 +30,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles(() => ({
     body: {
         fontFamily: 'source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace',
-        backgroundColor: '#111'
+        backgroundColor: '#ddd'
     },
   }));
 
@@ -34,6 +40,7 @@ function App() {
     const [data, setData] = useState({ entries: [] });
     let newEntries = [];
 
+    // first of all: get all the posts:
     async function fetchApi() {
         let response = await fetch(
             'https://dev.ushmorov.de/backend/api/collections/get/Posts'
@@ -46,7 +53,7 @@ function App() {
         fetchApi();
     }, []);
 
-    
+    // sort the posts if a filter is active:
     if (document.location.search) {
         let activeTag = document.location.search.substr(1);
         data.entries.forEach((post) => {
@@ -66,6 +73,7 @@ function App() {
       newEntries = data.entries;
     }
     
+    //aaaaand render them in the layout:
     return (
         <MuiThemeProvider theme={theme}>
             <CssBaseline />
@@ -84,6 +92,7 @@ function App() {
                             )}
                         />
                         <Route exact path='/about' component={About} />
+                        <Route exact path='/legal' component={Legal} />
                         <Route path='/post/:title' component={Post} />
                     </Grid>
                     }
