@@ -3,15 +3,21 @@ import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-    tags: {
-      display: 'flex',
-      justifyContent: 'center',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
+    sidebarWrapper: {
+        marginTop: theme.spacing(4),
     },
-  }));
+    headline: {
+        textAlign: 'center',
+    },
+    tags: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        '& > *': {
+            margin: theme.spacing(0.5),
+        },
+    },
+}));
 
 const Sidebar = ({ entries }) => {
     const classes = useStyles();
@@ -28,7 +34,8 @@ const Sidebar = ({ entries }) => {
     }
 
     const handleClick = (tag) => {
-        document.location.search = tag
+        // todo: must probably happen via history
+        document.location.search = tag;
     };
 
     entries.forEach((post) => {
@@ -39,13 +46,21 @@ const Sidebar = ({ entries }) => {
     });
 
     return (
-        <div>
-            <h3>Tags: </h3>
-        <div className={classes.tags}>
-            {newTags.map((tag) => (
-                <Chip onClick={() => handleClick(tag)} label={tag} key={tag} />
-            ))}
-        </div>
+        <div className={classes.sidebarWrapper}>
+            <h3 className={classes.headline}>Tags: </h3>
+            <div className={classes.tags}>
+                {newTags.map((tag) => (
+                    <Chip
+                        avatar={'#'}
+                        onClick={() => handleClick(tag)}
+                        clickable
+                        color='primary'
+                        label={tag}
+                        key={tag}
+                        variant='outlined'
+                    />
+                ))}
+            </div>
         </div>
     );
 };

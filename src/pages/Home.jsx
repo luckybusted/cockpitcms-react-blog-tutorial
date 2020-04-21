@@ -24,7 +24,13 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     metaWrapper: {
-        background: '#eee',
+        display: 'flex',
+        justifyContent: 'end',
+        alignItems: 'center',
+        padding: theme.spacing(1),
+    },
+    metaData: {
+        marginLeft: theme.spacing(1),
     },
 }));
 
@@ -67,28 +73,40 @@ const Home = ({ entries }) => {
                         onClick={() => toPost(post.Title, post._id)}
                     >
                         <CardContent>
-                            <h3>{post.Title}</h3>
+                            <Grid container>
+                                <Grid
+                                    container
+                                    item
+                                    sm={6}
+                                    direction='row'
+                                    justify='start'
+                                    alignItems='center'
+                                >
+                                    <h2>{post.Title}</h2>
+                                </Grid>
+                                <Grid
+                                    container
+                                    item
+                                    sm={6}
+                                    direction='column'
+                                    justify='start'
+                                    alignItems='start'
+                                >
+                                    <div className={classes.metaWrapper}>
+                                        <AccessAlarm />
+                                        <div className={classes.metaData}>
+                                            {parseTime(post._created)}
+                                        </div>
+                                    </div>
+                                    <div className={classes.metaWrapper}>
+                                        <LocalOffer />
+                                        <div className={classes.metaData}>
+                                            {renderTags(post.Tags)}
+                                        </div>
+                                    </div>
+                                </Grid>
+                            </Grid>
                         </CardContent>
-                        <Grid className={classes.metaWrapper} container>
-                            <Grid
-                                sm={6}
-                                direction='row'
-                                justify='center'
-                                alignItems='center'
-                            >
-                                <AccessAlarm />
-                                <span>{parseTime(post._created)}</span>
-                            </Grid>
-                            <Grid
-                                sm={6}
-                                direction='row'
-                                justify='center'
-                                alignItems='center'
-                            >
-                                <LocalOffer />
-                                <div>{renderTags(post.Tags)}</div>
-                            </Grid>
-                        </Grid>
                     </Card>
                 ))}
             </Grid>
