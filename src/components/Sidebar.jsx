@@ -1,6 +1,7 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     sidebarWrapper: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Sidebar = ({ entries }) => {
+    let history = useHistory();
     const classes = useStyles();
     let newTags = [];
 
@@ -34,8 +36,8 @@ const Sidebar = ({ entries }) => {
     }
 
     const handleClick = (tag) => {
-        // todo: must probably happen via history
-        document.location.search = tag;
+        // todo: check tags with two or more words separated by space.
+        history.push({ pathname: '/', search: tag });
     };
 
     entries.forEach((post) => {
