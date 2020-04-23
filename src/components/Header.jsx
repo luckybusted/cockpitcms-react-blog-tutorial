@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
     headline: {
         textAlign: 'center',
     },
+    headlineLink: {
+        textDecoration: 'none',
+        color: 'inherit',
+    },
     navigation: {
         listStyle: 'none',
         padding: '0',
@@ -38,7 +42,9 @@ const Header = () => {
     return (
         <header className={classes.header}>
             <h1 className={classes.headline}>
-                <Link to='/'>John Doe</Link>
+                <Link className={classes.headlineLink} to='/'>
+                    John Doe
+                </Link>
             </h1>
             <nav>
                 <ul className={classes.navigation}>
