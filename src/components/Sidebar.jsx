@@ -36,7 +36,6 @@ const Sidebar = ({ entries }) => {
     }
 
     const handleClick = (tag) => {
-        // todo: check tags with two or more words separated by space.
         history.push({ pathname: '/', search: tag });
     };
 
