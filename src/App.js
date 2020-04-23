@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Material UI style dependencies
 import { withRouter, Route } from 'react-router-dom';
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import CssBaseline from "@material-ui/core/CssBaseline";
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -20,22 +21,24 @@ import Legal from './pages/Legal';
 
 const theme = createMuiTheme({
     palette: {
-      common: {
-        darkGrey: '#555',
-        darkerGrey: '#444'
-      }
-    }
-  });
+        common: {
+            darkGrey: '#555',
+            darkerGrey: '#444',
+        },
+    },
+});
 
 const useStyles = makeStyles(() => ({
     body: {
-        fontFamily: 'source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace',
-        backgroundColor: '#ddd'
+        fontFamily:
+            'source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace',
+        backgroundColor: '#ddd',
     },
-  }));
+}));
 
-function App() {
+const App = () => {
     const classes = useStyles();
+    let history = useHistory();
 
     const [data, setData] = useState({ entries: [] });
     let newEntries = [];
@@ -55,24 +58,27 @@ function App() {
 
     // sort the posts if a filter is active:
     if (document.location.search) {
-        let activeTag = document.location.search.substr(1);
+        let activeTag = history.location.search.substr(1);
+
         data.entries.forEach((post) => {
             if (
                 post.Tags.length &&
                 post.Tags.filter(
                     (tag) =>
-                        activeTag
+                        encodeURI(activeTag)
                             .toLowerCase()
-                            .localeCompare(tag.toLowerCase()) === 0
+                            .localeCompare(
+                                encodeURIComponent(tag).toLowerCase()
+                            ) === 0
                 ).length
             ) {
                 newEntries.push(post);
             }
         });
     } else {
-      newEntries = data.entries;
+        newEntries = data.entries;
     }
-    
+
     //aaaaand render them in the layout:
     return (
         <MuiThemeProvider theme={theme}>
@@ -82,20 +88,20 @@ function App() {
                     <Grid item xs={12} sm={3}>
                         <Header />
                     </Grid>
-                    {data.entries && 
-                    <Grid item xs={12} sm={6}>
-                        <Route
-                            exact
-                            path='/'
-                            render={props => (
-                                <Home {...props} entries={newEntries} />
-                            )}
-                        />
-                        <Route exact path='/about' component={About} />
-                        <Route exact path='/legal' component={Legal} />
-                        <Route path='/post/:title' component={Post} />
-                    </Grid>
-                    }
+                    {data.entries && (
+                        <Grid item xs={12} sm={6}>
+                            <Route
+                                exact
+                                path='/'
+                                render={(props) => (
+                                    <Home {...props} entries={newEntries} />
+                                )}
+                            />
+                            <Route exact path='/about' component={About} />
+                            <Route exact path='/legal' component={Legal} />
+                            <Route path='/post/:title' component={Post} />
+                        </Grid>
+                    )}
                     <Grid item xs={12} sm={3}>
                         <Sidebar entries={data.entries} />
                     </Grid>
@@ -103,6 +109,6 @@ function App() {
             </Container>
         </MuiThemeProvider>
     );
-}
+};
 
 export default withRouter(App);
