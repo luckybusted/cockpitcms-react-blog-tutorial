@@ -66,49 +66,61 @@ const Home = ({ entries }) => {
     return (
         <Grid container spacing={3}>
             <Grid className={classes.postWrapper} item xs={12}>
-                {entries.map((post) => (
-                    <Card
-                        key={post._id}
-                        className={classes.post}
-                        onClick={() => toPost(post.Title, post._id)}
-                    >
-                        <CardContent>
-                            <Grid container>
-                                <Grid
-                                    container
-                                    item
-                                    sm={6}
-                                    direction='row'
-                                    justify='start'
-                                    alignItems='center'
-                                >
-                                    <h2>{post.Title}</h2>
-                                </Grid>
-                                <Grid
-                                    container
-                                    item
-                                    sm={6}
-                                    direction='column'
-                                    justify='start'
-                                    alignItems='start'
-                                >
-                                    <div className={classes.metaWrapper}>
-                                        <AccessAlarm />
-                                        <div className={classes.metaData}>
-                                            {parseTime(post._created)}
-                                        </div>
-                                    </div>
-                                    <div className={classes.metaWrapper}>
-                                        <LocalOffer />
-                                        <div className={classes.metaData}>
-                                            {renderTags(post.Tags)}
-                                        </div>
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        </CardContent>
-                    </Card>
-                ))}
+                {entries.map((post) => {
+                    if (post.publish) {
+                        return (
+                            <Card
+                                key={post._id}
+                                className={classes.post}
+                                onClick={() => toPost(post.Title, post._id)}
+                            >
+                                <CardContent>
+                                    <Grid container>
+                                        <Grid
+                                            container
+                                            item
+                                            sm={6}
+                                            direction='row'
+                                            justify='flex-start'
+                                            alignItems='center'
+                                        >
+                                            <h2>{post.Title}</h2>
+                                        </Grid>
+                                        <Grid
+                                            container
+                                            item
+                                            sm={6}
+                                            direction='column'
+                                            justify='flex-start'
+                                            alignItems='flex-start'
+                                        >
+                                            <div
+                                                className={classes.metaWrapper}
+                                            >
+                                                <AccessAlarm />
+                                                <div
+                                                    className={classes.metaData}
+                                                >
+                                                    {parseTime(post._created)}
+                                                </div>
+                                            </div>
+                                            <div
+                                                className={classes.metaWrapper}
+                                            >
+                                                <LocalOffer />
+                                                <div
+                                                    className={classes.metaData}
+                                                >
+                                                    {renderTags(post.Tags)}
+                                                </div>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+                                </CardContent>
+                            </Card>
+                        );
+                    }
+                })}
             </Grid>
         </Grid>
     );

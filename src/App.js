@@ -46,7 +46,7 @@ const App = () => {
     // first of all: get all the posts:
     async function fetchApi() {
         let response = await fetch(
-            'https://dev.ushmorov.de/backend/api/collections/get/Posts'
+            'https://cockpit.ushmorov.de/backend/api/collections/get/Posts'
         );
         let data = await response.json();
         setData(data);

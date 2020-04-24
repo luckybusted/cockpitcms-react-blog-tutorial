@@ -52,7 +52,6 @@ const Sidebar = ({ entries }) => {
             <div className={classes.tags}>
                 {newTags.map((tag) => (
                     <Chip
-                        avatar={'#'}
                         onClick={() => handleClick(tag)}
                         clickable
                         color='primary'
