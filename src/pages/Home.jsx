@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const Home = ({ entries }) => {
     let history = useHistory();
     const classes = useStyles();
+    let newEntries = [];
 
     function toPost(title, id) {
         let url = title
@@ -63,10 +64,33 @@ const Home = ({ entries }) => {
 
     const renderTags = (tags) => (tags ? tags.join(', ') : '');
 
+    // sort the posts if a filter is active:
+    if (history.location.search) {
+        let activeTag = history.location.search.substr(1);
+
+        entries.forEach((post) => {
+            if (
+                post.Tags.length &&
+                post.Tags.filter(
+                    (tag) =>
+                        encodeURI(activeTag)
+                            .toLowerCase()
+                            .localeCompare(
+                                encodeURIComponent(tag).toLowerCase()
+                            ) === 0
+                ).length
+            ) {
+                newEntries.push(post);
+            }
+        });
+    } else {
+        newEntries = entries;
+    }
+
     return (
         <Grid container spacing={3}>
             <Grid className={classes.postWrapper} item xs={12}>
-                {entries.map((post) => (
+                {newEntries.map((post) => (
                     <Card
                         key={post._id}
                         className={classes.post}

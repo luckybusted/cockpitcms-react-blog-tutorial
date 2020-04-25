@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 // Material UI style dependencies
 import { withRouter, Route } from 'react-router-dom';
@@ -38,10 +37,8 @@ const useStyles = makeStyles(() => ({
 
 const App = () => {
     const classes = useStyles();
-    let history = useHistory();
 
     const [data, setData] = useState({ entries: [] });
-    let newEntries = [];
 
     // first of all: get all the posts:
     async function fetchApi() {
@@ -63,29 +60,6 @@ const App = () => {
         fetchApi();
     }, []);
 
-    // sort the posts if a filter is active:
-    if (history.location.search) {
-        let activeTag = history.location.search.substr(1);
-
-        data.entries.forEach((post) => {
-            if (
-                post.Tags.length &&
-                post.Tags.filter(
-                    (tag) =>
-                        encodeURI(activeTag)
-                            .toLowerCase()
-                            .localeCompare(
-                                encodeURIComponent(tag).toLowerCase()
-                            ) === 0
-                ).length
-            ) {
-                newEntries.push(post);
-            }
-        });
-    } else {
-        newEntries = data.entries;
-    }
-
     //aaaaand render them in the layout:
     return (
         <MuiThemeProvider theme={theme}>
@@ -101,7 +75,7 @@ const App = () => {
                                 exact
                                 path='/'
                                 render={(props) => (
-                                    <Home {...props} entries={newEntries} />
+                                    <Home {...props} entries={data.entries} />
                                 )}
                             />
                             <Route exact path='/about' component={About} />
