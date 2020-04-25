@@ -106,7 +106,12 @@ const App = () => {
                             />
                             <Route exact path='/about' component={About} />
                             <Route exact path='/legal' component={Legal} />
-                            <Route path='/post/:title' component={Post} />
+                            <Route
+                                path='/post/:title'
+                                render={(props) => (
+                                    <Post {...props} entries={data.entries} />
+                                )}
+                            />
                         </Grid>
                     )}
                     <Grid item xs={12} sm={3}>

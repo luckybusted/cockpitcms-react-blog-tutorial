@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Material UI style dependencies
@@ -10,35 +10,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Post = (props) => {
-    let history = useHistory();
-    const classes = useStyles();
-    const [data, setData] = useState({ entries: [] });
-
-    async function fetchApi() {
-        let pathArr = history.location.pathname.split('-'),
-            uid = pathArr[pathArr.length - 1];
-
-        let response = await fetch(
-            'https://cockpit.ushmorov.de/backend/api/collections/get/Posts',
-            {
-                method: 'post',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    filter: { publish: true, _id: uid },
-                    populate: 1,
-                }),
-            }
-        );
-
-        let data = await response.json();
-
-        setData(data);
-    }
-
-    useEffect(() => {
-        fetchApi();
-    }, []);
+const Post = ({ entries }) => {
+    let history = useHistory(),
+        classes = useStyles(),
+        pathArr = history.location.pathname.split('-'),
+        uid = pathArr[pathArr.length - 1],
+        post = entries.filter((entry) => entry._id === uid);
 
     const renderHTML = (rawHTML) =>
         React.createElement('div', {
@@ -47,10 +24,10 @@ const Post = (props) => {
 
     return (
         <div className={classes.blogpost}>
-            {data.entries.length > 0 && (
+            {post.length > 0 && (
                 <>
-                    <h1>{data.entries[0].Title}</h1>
-                    {renderHTML(data.entries[0].Content)}
+                    <h1>{post[0].Title}</h1>
+                    {renderHTML(post[0].Content)}
                 </>
             )}
         </div>
