@@ -46,7 +46,14 @@ const App = () => {
     // first of all: get all the posts:
     async function fetchApi() {
         let response = await fetch(
-            'https://cockpit.ushmorov.de/backend/api/collections/get/Posts'
+            'https://cockpit.ushmorov.de/backend/api/collections/get/Posts',
+            {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    filter: { publish: true },
+                }),
+            }
         );
         let data = await response.json();
         setData(data);
@@ -57,7 +64,7 @@ const App = () => {
     }, []);
 
     // sort the posts if a filter is active:
-    if (document.location.search) {
+    if (history.location.search) {
         let activeTag = history.location.search.substr(1);
 
         data.entries.forEach((post) => {
