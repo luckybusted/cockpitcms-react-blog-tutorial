@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Material UI style dependencies
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,11 +11,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Post = (props) => {
+    let history = useHistory();
     const classes = useStyles();
     const [data, setData] = useState({ entries: [] });
 
     async function fetchApi() {
-        let pathArr = window.location.pathname.split('-'),
+        let pathArr = history.location.pathname.split('-'),
             uid = pathArr[pathArr.length - 1];
 
         let response = await fetch(
@@ -28,6 +30,7 @@ const Post = (props) => {
                 }),
             }
         );
+
         let data = await response.json();
 
         setData(data);
