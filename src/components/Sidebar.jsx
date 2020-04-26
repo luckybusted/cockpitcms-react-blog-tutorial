@@ -35,16 +35,16 @@ const Sidebar = ({ entries }) => {
             newTags.push(term);
     }
 
-    const handleClick = (tag) => {
-        history.push({ pathname: '/', search: tag });
-    };
-
     entries.forEach((post) => {
         if (post.Tags.length)
             post.Tags.map((tag) =>
                 newTags.length ? compare(tag) : newTags.push(tag)
             );
     });
+
+    const handleClick = (tag) => {
+        history.push({ pathname: '/', search: tag });
+    };
 
     return (
         <div className={classes.sidebarWrapper}>
